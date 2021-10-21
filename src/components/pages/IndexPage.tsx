@@ -8,7 +8,7 @@ function IndexPage() {
     <IndexTemplate 
       nicknameInput={nicknameInput}
       setNicknameInput={setNicknameInput}
-      onClickSearch={() => console.log('submit')}
+      onClickSearch={() => console.log('nicknameInput', nicknameInput)}
     />
   )
 }

@@ -23,39 +23,43 @@ function IndexTemplate(props: Props) {
         htmlWidth='370'
       />
       
-      <InputGroup
-        w='450px'
+      <form
+        onSubmit={props.onClickSearch}
       >
-        <Input
-          placeholder='닉네임을 입력하세요'
-          _placeholder={{ color: 'gray.900' }}
-          bg='blue.100'
-          borderColor='blue.300'
-          _hover={{ borderColor: 'blue.300', background: 'white' }}
-          focusBorderColor='blue.300'
-          variant='filled'
-          textColor='gray.900'
+        <InputGroup
           w='450px'
-          borderRadius='18px'
-          // value={props.nicknameInput}
-          // onInput={(t) => props.setNicknameInput(t.value)}
-        />
-
-        <InputRightElement
-          w='40px'
         >
-          <IconButton 
-            aria-label='Search' 
-            icon={<BsSearch />} 
-            color='black'
-            bg='none'
-            _focus={{ border: 'hidden' }}
-            _hover={{ background: 'none' }}
-            _active={{ background: 'none' }}
-            onClick={props.onClickSearch}
+          <Input
+            placeholder='닉네임을 입력하세요'
+            _placeholder={{ color: 'gray.900' }}
+            bg='blue.100'
+            borderColor='blue.300'
+            _hover={{ borderColor: 'blue.300', background: 'white' }}
+            focusBorderColor='blue.300'
+            variant='filled'
+            textColor='gray.900'
+            w='450px'
+            borderRadius='18px'
+            value={props.nicknameInput}
+            onChange={(e) => props.setNicknameInput(e.target.value)}
           />
-        </InputRightElement>
-      </InputGroup>
+    
+          <InputRightElement
+            w='40px'
+          >
+            <IconButton 
+              aria-label='Search' 
+              icon={<BsSearch />} 
+              color='black'
+              bg='none'
+              _focus={{ border: 'hidden' }}
+              _hover={{ background: 'none' }}
+              _active={{ background: 'none' }}
+              onClick={props.onClickSearch}
+            />
+          </InputRightElement>
+        </InputGroup> 
+      </form>
     </VStack>
   )
 }
