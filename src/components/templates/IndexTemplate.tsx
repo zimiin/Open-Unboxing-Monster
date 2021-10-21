@@ -1,17 +1,18 @@
 import React from 'react'
-import { VStack, Image, Flex, Input } from '@chakra-ui/react'
+import { VStack, Image, Input } from '@chakra-ui/react'
 import { InputGroup, InputRightElement } from '@chakra-ui/input'
-import { Button, IconButton } from '@chakra-ui/button'
+import { IconButton } from '@chakra-ui/button'
 import logo from '../../assets/logo_h.svg'
 import { BsSearch } from 'react-icons/bs'
 
 interface Props {
   nicknameInput: string,
   setNicknameInput: (input: string) => void,
-  onClickSearch: () => void,
 }
 
 function IndexTemplate(props: Props) {
+  const archive: string = '/archive/' + props.nicknameInput
+
   return (
     <VStack
       h='100vh'
@@ -23,7 +24,9 @@ function IndexTemplate(props: Props) {
         htmlWidth='370'
       />
       
-      <form>
+      <form
+        action={archive}
+      >
         <InputGroup
           w='450px'
         >
@@ -53,7 +56,7 @@ function IndexTemplate(props: Props) {
               _focus={{ border: 'hidden' }}
               _hover={{ background: 'none' }}
               _active={{ background: 'none' }}
-              onClick={props.onClickSearch}
+              type='submit'
             />
           </InputRightElement>
         </InputGroup> 
