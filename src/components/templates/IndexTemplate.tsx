@@ -23,9 +23,7 @@ function IndexTemplate(props: Props) {
         htmlWidth='370'
       />
       
-      <form
-        onSubmit={props.onClickSearch}
-      >
+      <form>
         <InputGroup
           w='450px'
         >

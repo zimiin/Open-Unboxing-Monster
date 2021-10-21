@@ -4,11 +4,15 @@ import IndexTemplate from '../templates/IndexTemplate'
 function IndexPage() {
   const [nicknameInput, setNicknameInput] = useState('')
 
+  const linkToArchive = () => {
+    window.location.href = `/archive/${nicknameInput}`
+  }
+
   return (
     <IndexTemplate 
       nicknameInput={nicknameInput}
       setNicknameInput={setNicknameInput}
-      onClickSearch={() => console.log('nicknameInput', nicknameInput)}
+      onClickSearch={linkToArchive}
     />
   )
 }
