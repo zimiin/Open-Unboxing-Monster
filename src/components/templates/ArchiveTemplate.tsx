@@ -2,15 +2,18 @@ import React from 'react'
 import { VStack, Image } from '@chakra-ui/react'
 import { Input, InputGroup, InputRightElement } from '@chakra-ui/input'
 import { IconButton } from '@chakra-ui/button'
-import { Box, Flex } from '@chakra-ui/layout'
+import { Flex } from '@chakra-ui/layout'
 import logo from '../../assets/logo_h.svg'
 import { useMediaQuery } from '@chakra-ui/media-query'
 import { BsSearch } from 'react-icons/bs'
 import { Link } from 'react-router-dom'
+import { ArchiveItemType } from '../pages/ArchivePage'
+import ArchiveItem from '../organisms/ArchiveItem'
 
 interface Props {
   nicknameInput: string,
   setNicknameInput: (input: string) => void,
+  archiveItems: ArchiveItemType[]
 }
 
 function ArchiveTemplate(props: Props) {
@@ -27,6 +30,7 @@ function ArchiveTemplate(props: Props) {
         justifyContent='center'
         alignItems='center'
         paddingTop='10px'
+        marginBottom='10px'
       >
         <Link to="/">
           <Image
@@ -45,7 +49,7 @@ function ArchiveTemplate(props: Props) {
             <Input
               placeholder='닉네임을 입력하세요'
               _placeholder={{ color: 'gray.900' }}
-              bg='blue.100'
+              bg='white'
               borderColor='blue.300'
               _hover={{ borderColor: 'blue.300', background: 'white' }}
               focusBorderColor='blue.300'
@@ -54,12 +58,13 @@ function ArchiveTemplate(props: Props) {
               borderRadius='18px'
               value={props.nicknameInput}
               onChange={(e) => props.setNicknameInput(e.target.value)}
+              onFocus={(e) => e.target.select()}
             />
 
             <InputRightElement
               w='40px'
             >
-              < IconButton
+              <IconButton
                 aria-label='Search'
                 icon={<BsSearch />}
                 color='black'
@@ -74,12 +79,14 @@ function ArchiveTemplate(props: Props) {
         </form>
       </Flex>
 
-      <Box
-        w='500px'
-        backgroundColor='gray.100'
-      >
-        
-      </Box>
+      {/* 데이터 없을 때 처리 */}
+      {props.archiveItems.length != 0 ?
+        (
+          props.archiveItems.map((item, index) => <ArchiveItem item={item} colorSet={index % 2} />)
+        )
+        : undefined
+      }
+      
     </VStack>
   )
 }
