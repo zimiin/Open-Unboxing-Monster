@@ -43,7 +43,7 @@ function ArchiveTemplate(props: Props) {
           action={archive}
         >
           <InputGroup
-            w={isNotSmallerScreen ? '450px' : '300px'}
+            w={isNotSmallerScreen ? '600px' : '300px'}
             marginLeft={isNotSmallerScreen ? '30px' : '5px'}
           >
             <Input

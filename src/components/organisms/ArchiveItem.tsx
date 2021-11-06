@@ -1,21 +1,25 @@
-import { IconButton } from '@chakra-ui/button'
+import { Button, IconButton } from '@chakra-ui/button'
 import { Image } from '@chakra-ui/image'
 import { Box, Flex, Text } from '@chakra-ui/layout'
 import React, { useState } from 'react'
-import { BsChevronDown } from 'react-icons/bs'
+import { BsChevronDown, BsChevronUp } from 'react-icons/bs'
 import { ArchiveItemType } from '../pages/ArchivePage'
 import { useMediaQuery } from '@chakra-ui/media-query'
 import { parseDate } from '../../utils/utils'
 
 const ArchiveItem = ({ item, colorSet }: { item: ArchiveItemType, colorSet?: number }) => {
   const [isNotSmallerScreen] = useMediaQuery("(min-width:690px)")
-  const [openDetail, setOpenDetail] = useState<boolean>(false)
+  const [showDetail, setShowDetail] = useState<boolean>(false)
+  const [tab, setTab] = useState<string>('info')
+
+  const mainColor = colorSet === 1 ? 'white' : '#edf8ff'
+  const deeperColor = colorSet === 1 ? 'blue.200' : 'blue.300'
 
   return (
     <>
       <Box
-        w={isNotSmallerScreen ? '660px' : '445px'}
-        bgColor={colorSet === 1 ? 'blue.100' : 'blue.200'}
+        w={isNotSmallerScreen ? '1000px' : '445px'}
+        bgColor={mainColor}
         py='8px'
         px='15px'
         marginY='10px'
@@ -26,7 +30,7 @@ const ArchiveItem = ({ item, colorSet }: { item: ArchiveItemType, colorSet?: num
         <Flex>
           <Text
             color='gray.900'
-            fontSize='sm'
+            fontSize='11'
             flex={'1'}
           >
             {'블록해시: ' + item.blockHash}
@@ -34,11 +38,13 @@ const ArchiveItem = ({ item, colorSet }: { item: ArchiveItemType, colorSet?: num
 
           <Text
             color='gray.900'
-            fontSize='sm'
+            fontSize='11'
           >
-            {'당첨일시: ' + parseDate(new Date(item.openData.openAt))}
+            {/* {'당첨일시: ' + parseDate(new Date(item.openData.openAt))} */}
+            {'당첨일시: ' + item.openData.openAt}
           </Text>
         </Flex>
+        
 
         <Flex
           marginTop='8px'
@@ -53,7 +59,8 @@ const ArchiveItem = ({ item, colorSet }: { item: ArchiveItemType, colorSet?: num
           <Flex
             direction='column'
             flex={1}
-            marginLeft='10px'
+            marginLeft='20px'
+            justifyContent='center'
           >
             <Flex
               direction='row'
@@ -112,16 +119,79 @@ const ArchiveItem = ({ item, colorSet }: { item: ArchiveItemType, colorSet?: num
           >
             <IconButton
               aria-label='flip'
-              icon={<BsChevronDown />}
+              icon={showDetail ? <BsChevronUp /> : <BsChevronDown />}
               backgroundColor={colorSet === 1 ? 'blue.200' : 'blue.100'}
               color='gray.900'
-              onClick={() => setOpenDetail(!openDetail)}
+              onClick={() => setShowDetail(!showDetail)}
             />
           </Flex>
         </Flex>
       </Box>
 
-      {openDetail === true ? <Text color='black'>true!!!</Text> : undefined}
+      {showDetail === true ? 
+        <Box
+          w={isNotSmallerScreen ? '1000px' : '445px'}
+          bgColor={'white'}
+          paddingTop='15px'
+          marginY='10px'
+          borderRadius='10px'
+          borderColor={colorSet === 1 ? 'blue.300' : 'blue.500'}
+          borderWidth='1px'
+        >
+          <Flex
+            flexDir='row'
+          >
+            <Button
+              bgColor={tab === 'info' ? deeperColor : 'gray.200'}
+              py='7px'
+              px='30px'
+              marginLeft='20px'
+              borderTopRadius='10px'
+              borderBottomRadius='0px'
+              width='120px'
+              alignItems='center'
+              onClick={() => setTab('info')}
+            >
+              <Text
+                color='black'
+              >
+                박스정보
+              </Text>
+            </Button>
+
+            <Button
+              bgColor={tab === 'replay' ? deeperColor : 'gray.100'}
+              py='7px'
+              px='30px'
+              marginLeft='20px'
+              borderTopRadius='10px'
+              borderBottomRadius='0px'
+              width='120px'
+              alignItems='center'
+              onClick={() => setTab('replay')}
+            >
+              <Text
+                color='black'
+              >
+                재현하기
+              </Text>
+            </Button>
+          </Flex>
+
+          <Box
+            py='20px'
+            px='20px'
+            backgroundColor={deeperColor}
+            borderBottomRadius='10px'
+          >
+            <Box
+              backgroundColor={'white'}
+            >
+              <Text>Halo</Text>
+            </Box>
+          </Box>
+        </Box>
+      : undefined}
     </>
   )
 }
