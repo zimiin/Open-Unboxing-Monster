@@ -9,6 +9,7 @@ import { BsSearch } from 'react-icons/bs'
 import { Link } from 'react-router-dom'
 import { ArchiveItemType } from '../pages/ArchivePage'
 import ArchiveItem from '../organisms/ArchiveItem'
+import { generateProbability } from '../../utils/utils'
 
 interface Props {
   nicknameInput: string,
@@ -80,9 +81,34 @@ function ArchiveTemplate(props: Props) {
       </Flex>
 
       {/* 데이터 없을 때 처리 */}
-      {props.archiveItems.length != 0 ?
+      {props.archiveItems.length !== 0 ?
         (
-          props.archiveItems.map((item, index) => <ArchiveItem item={item} colorSet={index % 2} />)
+          props.archiveItems.map(
+            (item, index) => {
+              const chartData: (string | number)[][] = [['item', 'prob']]
+              const boxItems = item.boxData.items.sort((a, b) => (a.price < b.price ? 1 : -1));
+              const reverseSortedPrice = boxItems.map((a) => a.price)
+              const probabilities: number[] = generateProbability(reverseSortedPrice, item.boxData.price)
+              
+              for (let i = 0; i < boxItems.length ; i++) {
+                let chartItem: (string | number)[] = []
+                chartItem.push(boxItems[i].title)
+                chartItem.push(probabilities[i])
+
+                chartData.push(chartItem)
+              }
+
+              console.log(chartData)
+
+              return (
+                <ArchiveItem
+                  item={item}
+                  colorSet={index % 2}
+                  chartData={chartData}
+                />
+              )
+            }
+          )
         )
         : undefined
       }
