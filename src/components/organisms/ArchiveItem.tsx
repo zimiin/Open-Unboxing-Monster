@@ -67,7 +67,7 @@ const ArchiveItem = ({
           marginTop='8px'
         >
           <Image
-            src={item.boxData.image}
+            src={item.openData.item.image}
             w='70px'
             h='70px'
             borderRadius='5px'
