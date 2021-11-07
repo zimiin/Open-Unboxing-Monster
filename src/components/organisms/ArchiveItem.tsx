@@ -9,6 +9,7 @@ import { parseDate } from '../../utils/utils'
 import monster_logo from '../../assets/monster.png'
 import Chart from "react-google-charts";
 import Label from '../atoms/Label'
+import Legend from '../molecules/Legend'
 
 export const PROB_COLORS = [
   "#ffb400", "#f0573d", "#01becc", "#9a76be", "#566270", "#F8FADD", "#CBA6C3", "#AAABD3", "#519D9E", "#58C9B9", "#9DC8C8",
@@ -19,12 +20,10 @@ const ArchiveItem = ({
   item,
   colorSet,
   chartData,
-  chartColors,
 }: {
   item: ArchiveItemType,
   colorSet?: number,
-  chartData?: any[] | {},
-  chartColors?: string[]
+  chartData?: any[],
 }) => {
   const [isNotSmallerScreen] = useMediaQuery("(min-width:690px)")
   const [showDetail, setShowDetail] = useState<boolean>(false)
@@ -202,75 +201,112 @@ const ArchiveItem = ({
                 <Flex
                   flexDir='row'
                 >
-                  <Chart
-                    chartType='PieChart'
-                    width='300px'
-                    height='300px'
-                    loader={<div>Loading Chart</div>}
-                    data={chartData}
-                    rootProps={{ 'data-testid': '1' }}
-                    options={{
-                      legend: 'none',
-                      colors: PROB_COLORS,
-                    }}
-                  />
-
                   <Flex
-                    flexDir='column'
+                    flex='2'
+                    alignItems='center'
+                    justifyContent='center'
+                  >
+                    <Chart
+                      chartType='PieChart'
+                      width='300px'
+                      height='300px'
+                      loader={<div>Loading Chart</div>}
+                      data={chartData}
+                      rootProps={{ 'data-testid': '1' }}
+                      options={{
+                        legend: 'none',
+                        colors: PROB_COLORS,
+                      }}
+                    />
+                  </Flex>
+
+                  <Flex 
+                    flex='3'
                     // bgColor='red'
                   >
-                    <Flex>
-                      <Image
-                        src={item.boxData.image}
-                        width='70px'
-                        height='70px'
+                    <Flex
+                      flexDir='column'
+                    // bgColor='red'
+                    >
+                      <Flex>
+                        <Image
+                          src={item.boxData.image}
+                          width='70px'
+                          height='70px'
+                        />
+
+                        <Flex
+                          direction='column'
+                          ml='15px'
+                        >
+                          <Flex
+                            direction='row'
+                            alignItems='center'
+                          >
+                            <Label
+                              text='박스이름'
+                              color='red.400'
+                            />
+
+                            <Text
+                              color='black'
+                              marginLeft='5px'
+                            >
+                              {item.boxData.title}
+                            </Text>
+                          </Flex>
+
+                          <Flex
+                            direction='row'
+                            marginTop='5px'
+                            alignItems='center'
+                          >
+                            <Label
+                              text='당첨상품'
+                              color='teal.400'
+                            />
+
+                            <Text
+                              color='black'
+                              marginLeft='5px'
+                            >
+                              {item.openData.item.title}
+                            </Text>
+                          </Flex>
+                        </Flex>
+                      </Flex>
+
+                      <Label
+                        text='박스구성상품'
+                        color='gray.500'
+                        mt='5px'
+                        mb='7px'
                       />
 
                       <Flex
-                        direction='column'
-                        ml='15px'
+                        flexWrap='wrap'
                       >
-                        <Flex
-                          direction='row'
-                          alignItems='center'
-                        >
-                          <Label
-                            text='박스이름'
-                            color='red.400'
-                          />
-
-                          <Text
-                            color='black'
-                            marginLeft='5px'
-                          >
-                            {item.boxData.title}
-                          </Text>
-                        </Flex>
-
-                        <Flex
-                          direction='row'
-                          marginTop='5px'
-                          alignItems='center'
-                        >
-                          <Label
-                            text='당첨상품'
-                            color='teal.400'
-                          />
-
-                          <Text
-                            color='black'
-                            marginLeft='5px'
-                          >
-                            {item.openData.item.title}
-                          </Text>
-                        </Flex>
+                        {chartData?.map(
+                          (data, index) => {
+                            console.log(index, data)
+                            if (index !== 0) {
+                              return (
+                                <Box
+                                  my='3px'
+                                  w='250px'
+                                // bgColor={PROB_COLORS[(index - 1) % PROB_COLORS.length]}
+                                >
+                                  <Legend
+                                    text={data[0]}
+                                    color={PROB_COLORS[(index - 1) % PROB_COLORS.length]}
+                                  />
+                                </Box>
+                              )
+                            }
+                          }
+                        )}
                       </Flex>
                     </Flex>
-
-                    <Label
-                      text='박스구성상품'
-                      color='gray.500'
-                    />
                   </Flex>
                 </Flex>
               </>

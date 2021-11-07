@@ -42,6 +42,96 @@ function ArchivePage() {
               price: 3000,
               image: 'https://user-images.githubusercontent.com/45932570/129475574-c89a6f3c-d7a4-4199-b481-69cb037872ec.jpeg',
               detail: '카구리먹고싶다'
+            },
+            {
+              id: 3,
+              productId: '123',
+              seller: 1,
+              title: '달콤한 디저트 세트',
+              price: 3000,
+              image: 'https://user-images.githubusercontent.com/45932570/129475574-c89a6f3c-d7a4-4199-b481-69cb037872ec.jpeg',
+              detail: '카구리먹고싶다'
+            },
+            {
+              id: 3,
+              productId: '123',
+              seller: 1,
+              title: '달콤한 디저트 세트',
+              price: 3000,
+              image: 'https://user-images.githubusercontent.com/45932570/129475574-c89a6f3c-d7a4-4199-b481-69cb037872ec.jpeg',
+              detail: '카구리먹고싶다'
+            },
+            {
+              id: 3,
+              productId: '123',
+              seller: 1,
+              title: '달콤한 디저트 세트',
+              price: 3000,
+              image: 'https://user-images.githubusercontent.com/45932570/129475574-c89a6f3c-d7a4-4199-b481-69cb037872ec.jpeg',
+              detail: '카구리먹고싶다'
+            },
+            {
+              id: 3,
+              productId: '123',
+              seller: 1,
+              title: '달콤한 디저트 세트',
+              price: 3000,
+              image: 'https://user-images.githubusercontent.com/45932570/129475574-c89a6f3c-d7a4-4199-b481-69cb037872ec.jpeg',
+              detail: '카구리먹고싶다'
+            },
+            {
+              id: 3,
+              productId: '123',
+              seller: 1,
+              title: '달콤한 디저트 세트',
+              price: 3000,
+              image: 'https://user-images.githubusercontent.com/45932570/129475574-c89a6f3c-d7a4-4199-b481-69cb037872ec.jpeg',
+              detail: '카구리먹고싶다'
+            },
+            {
+              id: 3,
+              productId: '123',
+              seller: 1,
+              title: '달콤한 디저트 세트',
+              price: 3000,
+              image: 'https://user-images.githubusercontent.com/45932570/129475574-c89a6f3c-d7a4-4199-b481-69cb037872ec.jpeg',
+              detail: '카구리먹고싶다'
+            },
+            {
+              id: 3,
+              productId: '123',
+              seller: 1,
+              title: '달콤한 디저트 세트',
+              price: 3000,
+              image: 'https://user-images.githubusercontent.com/45932570/129475574-c89a6f3c-d7a4-4199-b481-69cb037872ec.jpeg',
+              detail: '카구리먹고싶다'
+            },
+            {
+              id: 3,
+              productId: '123',
+              seller: 1,
+              title: '달콤한 디저트 세트',
+              price: 3000,
+              image: 'https://user-images.githubusercontent.com/45932570/129475574-c89a6f3c-d7a4-4199-b481-69cb037872ec.jpeg',
+              detail: '카구리먹고싶다'
+            },
+            {
+              id: 3,
+              productId: '123',
+              seller: 1,
+              title: '달콤한 디저트 세트',
+              price: 3000,
+              image: 'https://user-images.githubusercontent.com/45932570/129475574-c89a6f3c-d7a4-4199-b481-69cb037872ec.jpeg',
+              detail: '카구리먹고싶다'
+            },
+            {
+              id: 3,
+              productId: '123',
+              seller: 1,
+              title: '달콤한 디저트 세트',
+              price: 3000,
+              image: 'https://user-images.githubusercontent.com/45932570/129475574-c89a6f3c-d7a4-4199-b481-69cb037872ec.jpeg',
+              detail: '카구리먹고싶다'
             }
           ]
         },
