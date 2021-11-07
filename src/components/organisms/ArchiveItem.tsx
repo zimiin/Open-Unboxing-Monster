@@ -1,6 +1,6 @@
 import { Button, IconButton } from '@chakra-ui/button'
 import { Image } from '@chakra-ui/image'
-import { Box, Flex, Text } from '@chakra-ui/layout'
+import { Box, Flex, Link, Text } from '@chakra-ui/layout'
 import React, { useState } from 'react'
 import { BsChevronDown, BsChevronUp } from 'react-icons/bs'
 import { ArchiveItemType } from '../pages/ArchivePage'
@@ -10,6 +10,7 @@ import monster_logo from '../../assets/monster.png'
 import Chart from "react-google-charts";
 import Label from '../atoms/Label'
 import Legend from '../molecules/Legend'
+import { ExternalLinkIcon } from '@chakra-ui/icons'
 
 export const PROB_COLORS = [
   "#ffb400", "#f0573d", "#01becc", "#9a76be", "#566270", "#F8FADD", "#CBA6C3", "#AAABD3", "#519D9E", "#58C9B9", "#9DC8C8",
@@ -20,10 +21,12 @@ const ArchiveItem = ({
   item,
   colorSet,
   chartData,
+  my,
 }: {
   item: ArchiveItemType,
   colorSet?: number,
   chartData?: any[],
+  my?: string
 }) => {
   const [isNotSmallerScreen] = useMediaQuery("(min-width:690px)")
   const [showDetail, setShowDetail] = useState<boolean>(false)
@@ -33,33 +36,43 @@ const ArchiveItem = ({
   const deeperColor = colorSet === 1 ? 'blue.200' : 'blue.300'
 
   return (
-    <>
+    <Box 
+      // my='50px'
+    >
       <Box
         w={isNotSmallerScreen ? '1000px' : '445px'}
         bgColor={mainColor}
         py='8px'
         px='15px'
-        marginY='10px'
+        marginY='6px'
         borderRadius='10px'
         borderColor={colorSet === 1 ? 'blue.300' : 'blue.500'}
         borderWidth='1px'
       >
         <Flex>
-          <Text
-            color='gray.900'
+          <Link 
+            href={"https://scope.klaytn.com/tx/" + item.blockHash}
+            isExternal
             fontSize='11'
-            flex={'1'}
+            color='gray.900'
           >
             {'블록해시: ' + item.blockHash}
-          </Text>
 
-          <Text
-            color='gray.900'
-            fontSize='11'
+            <ExternalLinkIcon mx='3px'/>
+          </Link>
+
+          <Flex
+            flex='1'
+            justifyContent='flex-end'
           >
-            {/* {'당첨일시: ' + parseDate(new Date(item.openData.openAt))} */}
-            {'당첨일시: ' + item.openData.openAt}
-          </Text>
+            <Text
+              color='gray.900'
+              fontSize='11'
+            >
+              {'당첨일시: ' + parseDate(new Date(item.openData.openAt))}
+              {/* {'당첨일시: ' + item.openData.openAt} */}
+            </Text>
+          </Flex>
         </Flex>
         
 
@@ -92,7 +105,7 @@ const ArchiveItem = ({
                 color='black'
                 marginLeft='5px'
               >
-                {item.boxData.title}
+                {item.boxData.title + ' (' + item.boxData.price.toLocaleString() + '원)'}
               </Text>
             </Flex>
 
@@ -110,7 +123,7 @@ const ArchiveItem = ({
                 color='black'
                 marginLeft='5px'
               >
-                {item.openData.item.title}
+                {item.openData.item.title + ' (' + item.openData.item.price.toLocaleString() + '원)'}
               </Text>
             </Flex>
           </Flex>
@@ -252,7 +265,7 @@ const ArchiveItem = ({
                               color='black'
                               marginLeft='5px'
                             >
-                              {item.boxData.title}
+                              {item.boxData.title + ' (' + item.boxData.price.toLocaleString() + '원)'}
                             </Text>
                           </Flex>
 
@@ -270,7 +283,7 @@ const ArchiveItem = ({
                               color='black'
                               marginLeft='5px'
                             >
-                              {item.openData.item.title}
+                              {item.openData.item.title + ' (' + item.openData.item.price.toLocaleString() + '원)'}
                             </Text>
                           </Flex>
                         </Flex>
@@ -333,7 +346,7 @@ const ArchiveItem = ({
           </Box>
         </Box>
       : undefined}
-    </>
+    </Box>
   )
 }
 
