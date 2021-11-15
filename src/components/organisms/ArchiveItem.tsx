@@ -3,7 +3,6 @@ import { Image } from '@chakra-ui/image'
 import { Box, Flex, Link, Text } from '@chakra-ui/layout'
 import React, { useState } from 'react'
 import { BsChevronDown, BsChevronUp } from 'react-icons/bs'
-import { ArchiveItemType } from '../pages/ArchivePage'
 import { useMediaQuery } from '@chakra-ui/media-query'
 import { parseDate } from '../../utils/utils'
 import monster_logo from '../../assets/monster.png'
@@ -11,6 +10,7 @@ import Chart from "react-google-charts";
 import Label from '../atoms/Label'
 import Legend from '../molecules/Legend'
 import { ExternalLinkIcon } from '@chakra-ui/icons'
+import { BoxWithItems, Item, OpenResult } from '../../constants/types'
 
 export const PROB_COLORS = [
   "#ffb400", "#f0573d", "#01becc", "#9a76be", "#566270", "#F8FADD", "#CBA6C3", "#AAABD3", "#519D9E", "#58C9B9", "#9DC8C8",
@@ -18,14 +18,18 @@ export const PROB_COLORS = [
 ]
 
 const ArchiveItem = ({
-  item,
+  openResult,
   colorSet,
   chartData,
+  boxData,
+  resultItemData,
   my,
 }: {
-  item: ArchiveItemType,
+  openResult: OpenResult,
   colorSet?: number,
   chartData?: any[],
+  boxData?: BoxWithItems,
+  resultItemData?: Item,
   my?: string
 }) => {
   const [isNotSmallerScreen] = useMediaQuery("(min-width:690px)")
@@ -51,12 +55,12 @@ const ArchiveItem = ({
       >
         <Flex>
           <Link 
-            href={"https://scope.klaytn.com/tx/" + item.blockHash}
+            href={"https://scope.klaytn.com/tx/" + openResult.tx_hash}
             isExternal
             fontSize='11'
             color='gray.900'
           >
-            {'블록해시: ' + item.blockHash}
+            {'트랜잭션해시: ' + openResult.tx_hash}
 
             <ExternalLinkIcon mx='3px'/>
           </Link>
@@ -69,7 +73,7 @@ const ArchiveItem = ({
               color='gray.900'
               fontSize='11'
             >
-              {'당첨일시: ' + parseDate(new Date(item.openData.openAt))}
+              {'당첨일시: ' + parseDate(new Date(openResult.openAt))}
               {/* {'당첨일시: ' + item.openData.openAt} */}
             </Text>
           </Flex>
@@ -80,7 +84,7 @@ const ArchiveItem = ({
           marginTop='8px'
         >
           <Image
-            src={item.openData.item.image}
+            src={resultItemData?.image || 'https://user-images.githubusercontent.com/45932570/128672505-7b277913-a1e1-4b25-be16-07dee659a263.png'}
             w='70px'
             h='70px'
             borderRadius='5px'
@@ -105,7 +109,7 @@ const ArchiveItem = ({
                 color='black'
                 marginLeft='5px'
               >
-                {item.boxData.title + ' (' + item.boxData.price.toLocaleString() + '원)'}
+                {boxData?.title + ' (' + boxData?.price.toLocaleString() + '원)'}
               </Text>
             </Flex>
 
@@ -123,7 +127,7 @@ const ArchiveItem = ({
                 color='black'
                 marginLeft='5px'
               >
-                {item.openData.item.title + ' (' + item.openData.item.price.toLocaleString() + '원)'}
+                {resultItemData?.title + ' (' + resultItemData?.price.toLocaleString() + '원)'}
               </Text>
             </Flex>
           </Flex>
@@ -208,7 +212,7 @@ const ArchiveItem = ({
                   color='black'
                   fontSize='sm'
                 >
-                  {'랜덤시드: ' + item.randomSeed}
+                  {'랜덤시드: ' + openResult.seed}
                 </Text>
 
                 <Flex
@@ -243,7 +247,7 @@ const ArchiveItem = ({
                     >
                       <Flex>
                         <Image
-                          src={item.boxData.image}
+                          src={boxData?.image || 'https://user-images.githubusercontent.com/45932570/128672505-7b277913-a1e1-4b25-be16-07dee659a263.png'}
                           width='70px'
                           height='70px'
                         />
@@ -265,7 +269,7 @@ const ArchiveItem = ({
                               color='black'
                               marginLeft='5px'
                             >
-                              {item.boxData.title + ' (' + item.boxData.price.toLocaleString() + '원)'}
+                              {boxData?.title + ' (' + boxData?.price.toLocaleString() + '원)'}
                             </Text>
                           </Flex>
 
@@ -283,7 +287,7 @@ const ArchiveItem = ({
                               color='black'
                               marginLeft='5px'
                             >
-                              {item.openData.item.title + ' (' + item.openData.item.price.toLocaleString() + '원)'}
+                              {resultItemData?.title + ' (' + resultItemData?.price.toLocaleString() + '원)'}
                             </Text>
                           </Flex>
                         </Flex>

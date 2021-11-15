@@ -7,14 +7,32 @@ import logo from '../../assets/logo_h.svg'
 import { useMediaQuery } from '@chakra-ui/media-query'
 import { BsSearch } from 'react-icons/bs'
 import { Link } from 'react-router-dom'
-import { ArchiveItemType } from '../pages/ArchivePage'
 import ArchiveItem from '../organisms/ArchiveItem'
 import { generateProbability } from '../../utils/utils'
+import { BoxId, BoxWithItems, Item, OpenResult } from '../../constants/types'
 
 interface Props {
   nicknameInput: string,
+  openResults: OpenResult[],
+  boxDatas: Map<BoxId, BoxWithItems>,
   setNicknameInput: (input: string) => void,
-  archiveItems: ArchiveItemType[]
+}
+
+const getChartDataOfBox = (box: BoxWithItems): (string | number)[][] => {
+  const chartData: (string | number)[][] = [['item', 'prob']]
+  const boxItems = box.items.sort((a, b) => (a.price < b.price ? 1 : -1));
+  const reverseSortedPrice = boxItems.map((a) => a.price)
+  const probabilities: number[] = generateProbability(reverseSortedPrice, box.price)
+
+  for (let i = 0; i < boxItems.length; i++) {
+    let chartItem: (string | number)[] = []
+    chartItem.push(boxItems[i].title + ' (' + boxItems[i].price + '원)')
+    chartItem.push(probabilities[i])
+
+    chartData.push(chartItem)
+  }
+
+  return chartData
 }
 
 function ArchiveTemplate(props: Props) {
@@ -84,30 +102,24 @@ function ArchiveTemplate(props: Props) {
         </Flex>
 
         {/* 데이터 없을 때 처리 */}
-        {props.archiveItems.length !== 0 ?
+        {props.openResults.length !== 0 ?
           (
-            props.archiveItems.map(
+            props.openResults.map(
               (item, index) => {
-                const chartData: (string | number)[][] = [['item', 'prob']]
-                const boxItems = item.boxData.items.sort((a, b) => (a.price < b.price ? 1 : -1));
-                const reverseSortedPrice = boxItems.map((a) => a.price)
-                const probabilities: number[] = generateProbability(reverseSortedPrice, item.boxData.price)
-
-                for (let i = 0; i < boxItems.length; i++) {
-                  let chartItem: (string | number)[] = []
-                  chartItem.push(boxItems[i].title + ' (' + boxItems[i].price + '원)')
-                  chartItem.push(probabilities[i])
-
-                  chartData.push(chartItem)
+                const boxData = props.boxDatas.get(item.boxId)
+                let chartData = undefined
+                if (boxData) {
+                  chartData = getChartDataOfBox(boxData)
                 }
-
-                console.log(chartData)
+                const itemData: Item | undefined = boxData?.items.find(itemInBox => itemInBox.id === item.itemId)
 
                 return (
                   <ArchiveItem
-                    item={item}
+                    openResult={item}
                     colorSet={index % 2}
                     chartData={chartData}
+                    boxData={boxData}
+                    resultItemData={itemData}
                     // my='10px'
                   />
                 )
@@ -117,16 +129,16 @@ function ArchiveTemplate(props: Props) {
           : undefined
         }
       </VStack>
-      {/* <Box
+      
+      <Box
         h='100px'
-      /> */}
+        bgColor='white'
+      />
 
       <Flex
         bgColor='gray.700'
-        mt='100px'
         h='100px'
       >
-        <Text>hello</Text>
       </Flex>
     </>
   )

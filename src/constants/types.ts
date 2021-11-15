@@ -40,10 +40,11 @@ export type Item = {
 
 export interface OpenResult {
   id: number,
-  boxId: BoxId,
+  boxId: number,
   userId: string,
-  itemId: ItemId,
-  openAt: string,
-  user: User,
-  item: Item
+  itemId: number,
+  block_hash: string | undefined,
+  tx_hash: string | undefined,
+  seed: string | undefined,
+  openAt: string
 }
