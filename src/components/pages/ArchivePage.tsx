@@ -49,7 +49,12 @@ function ArchivePage() {
 
   const getDatas = async () => {
     try {
-      const openDataOfUser = await getOpenDataOfUser(nickname) || []
+      let openDataOfUser = await getOpenDataOfUser(nickname) || []
+      openDataOfUser.sort((a, b) => {
+        const aDate = new Date(a.openAt)
+        const bDate = new Date(b.openAt)
+        return -(aDate.valueOf() - bDate.valueOf())
+      })
       setOpenResults(openDataOfUser)
 
       const newBoxDatas: Map<BoxId, BoxWithItems> = new Map()
