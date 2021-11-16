@@ -71,6 +71,7 @@ function ArchivePage() {
   }
 
   useEffect(() => {
+    document.title = nickname + '님의 오픈 기록'
     setNicknameInput(nickname)
     getDatas()
       .catch(error => console.log('Error in useEffect of ArchivePage', error))
