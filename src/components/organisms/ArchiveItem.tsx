@@ -60,7 +60,7 @@ const ArchiveItem = ({
             fontSize='11'
             color='gray.900'
           >
-            {'트랜잭션해시: ' + openResult.tx_hash}
+            {'트랜잭션해시: '}{openResult.tx_hash !== null ? openResult.tx_hash : '값이 없습니다.'}
 
             <ExternalLinkIcon mx='3px'/>
           </Link>
@@ -212,7 +212,7 @@ const ArchiveItem = ({
                   color='black'
                   fontSize='sm'
                 >
-                  {'랜덤시드: ' + openResult.seed}
+                  {'랜덤시드: '}{openResult.seed !== null ? openResult.seed : '값이 없습니다.'}
                 </Text>
 
                 <Flex
@@ -305,7 +305,6 @@ const ArchiveItem = ({
                       >
                         {chartData?.map(
                           (data, index) => {
-                            console.log(index, data)
                             if (index !== 0) {
                               return (
                                 <Box

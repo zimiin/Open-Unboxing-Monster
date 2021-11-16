@@ -9,11 +9,12 @@ function ArchivePage() {
   const [nicknameInput, setNicknameInput] = useState('')
   const [openResults, setOpenResults] = useState<OpenResult[]>([])
   const [boxDatas, setBoxDatas] = useState<Map<BoxId, BoxWithItems>>(new Map())
+  const [isLoading, setIsLoading] = useState<boolean>(true)
   
   const getOpenDataOfUser = async (user: string): Promise<OpenResult[] | undefined> => {
     try {
-      // const response = await fetch(URLS.unboxing_api + 'open-result/nickname/' + nickname)
-      const response = await fetch('open-result/nickname/' + nickname)
+      const response = await fetch(URLS.unboxing_api + 'open-result/nickname/' + nickname)
+      // const response = await fetch('/open-result/nickname/' + nickname)
 
       if (response.status !== 200) {
         const json = await response.json()
@@ -30,8 +31,8 @@ function ArchivePage() {
 
   const getBoxData = async (boxId: BoxId) => {
     try {
-      // const response = await fetch(URLS.unboxing_api + 'box/' + boxId)
-      const response = await fetch('box/' + boxId)
+      const response = await fetch(URLS.unboxing_api + 'box/' + boxId)
+      // const response = await fetch('/box/' + boxId)
 
       if (response.status !== 200) {
         const json = await response.json()
@@ -73,6 +74,7 @@ function ArchivePage() {
     setNicknameInput(nickname)
     getDatas()
       .catch(error => console.log('Error in useEffect of ArchivePage', error))
+      .finally(() => setIsLoading(false))
   }, [])
 
   return (
@@ -80,6 +82,7 @@ function ArchivePage() {
       nicknameInput={nicknameInput}
       openResults={openResults}
       boxDatas={boxDatas}
+      isLoading={isLoading}
       setNicknameInput={setNicknameInput}
     />
   )

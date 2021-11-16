@@ -1,5 +1,5 @@
 import React from 'react'
-import { VStack, Image } from '@chakra-ui/react'
+import { VStack, Image, Spinner } from '@chakra-ui/react'
 import { Input, InputGroup, InputRightElement } from '@chakra-ui/input'
 import { IconButton } from '@chakra-ui/button'
 import { Box, Flex, Text } from '@chakra-ui/layout'
@@ -10,11 +10,13 @@ import { Link } from 'react-router-dom'
 import ArchiveItem from '../organisms/ArchiveItem'
 import { generateProbability } from '../../utils/utils'
 import { BoxId, BoxWithItems, Item, OpenResult } from '../../constants/types'
+import monster_logo from '../../assets/monster.png'
 
 interface Props {
   nicknameInput: string,
   openResults: OpenResult[],
   boxDatas: Map<BoxId, BoxWithItems>,
+  isLoading: boolean,
   setNicknameInput: (input: string) => void,
 }
 
@@ -26,7 +28,7 @@ const getChartDataOfBox = (box: BoxWithItems): (string | number)[][] => {
 
   for (let i = 0; i < boxItems.length; i++) {
     let chartItem: (string | number)[] = []
-    chartItem.push(boxItems[i].title + ' (' + boxItems[i].price + '원)')
+    chartItem.push(boxItems[i].title + ' (' + boxItems[i].price.toLocaleString() + '원)')
     chartItem.push(probabilities[i])
 
     chartData.push(chartItem)
@@ -101,6 +103,15 @@ function ArchiveTemplate(props: Props) {
           </form>
         </Flex>
 
+        {props.isLoading ? 
+          <Spinner
+            color="gray.800"
+            size="md"
+          />
+          :
+          undefined
+        }
+
         {/* 데이터 없을 때 처리 */}
         {props.openResults.length !== 0 ?
           (
@@ -126,7 +137,25 @@ function ArchiveTemplate(props: Props) {
               }
             )
           )
-          : undefined
+          : 
+          <Flex
+            h='sm'
+            alignItems='center'
+            justifyContent='center'
+            flexDir='column'
+          >
+            <Image
+              src={monster_logo}
+              width='100px'
+            />
+
+            <Text
+              color='black'
+              mt='13px'
+            >
+              오픈데이터가 없습니다.
+            </Text>
+          </Flex>
         }
       </VStack>
       
