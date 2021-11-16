@@ -13,8 +13,8 @@ function ArchivePage() {
   
   const getOpenDataOfUser = async (user: string): Promise<OpenResult[] | undefined> => {
     try {
-      const response = await fetch(URLS.unboxing_api + 'open-result/nickname/' + nickname)
-      // const response = await fetch('/open-result/nickname/' + nickname)
+      // const response = await fetch(URLS.unboxing_api + 'open-result/nickname/' + nickname)
+      const response = await fetch('/open-result/nickname/' + nickname)
 
       if (response.status !== 200) {
         const json = await response.json()
@@ -31,8 +31,8 @@ function ArchivePage() {
 
   const getBoxData = async (boxId: BoxId) => {
     try {
-      const response = await fetch(URLS.unboxing_api + 'box/' + boxId)
-      // const response = await fetch('/box/' + boxId)
+      // const response = await fetch(URLS.unboxing_api + 'box/' + boxId)
+      const response = await fetch('/box/' + boxId)
 
       if (response.status !== 200) {
         const json = await response.json()
