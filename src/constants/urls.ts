@@ -3,5 +3,5 @@ type Urls = {
 }
 
 export const URLS: Urls = {
-  unboxing_api: 'https://api.unboxing.monster',
+  unboxing_api: 'https://api.unboxing.monster/',
 }

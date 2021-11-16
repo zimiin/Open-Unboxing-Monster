@@ -126,6 +126,7 @@ function ArchiveTemplate(props: Props) {
 
                 return (
                   <ArchiveItem
+                    key={item.id}
                     openResult={item}
                     colorSet={index % 2}
                     chartData={chartData}
