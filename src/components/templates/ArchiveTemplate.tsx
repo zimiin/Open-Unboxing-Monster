@@ -103,60 +103,57 @@ function ArchiveTemplate(props: Props) {
           </form>
         </Flex>
 
-        {props.isLoading ? 
+        {/* 데이터 없을 때 처리 */}
+        {props.isLoading ?
           <Spinner
             color="gray.800"
             size="md"
           />
           :
-          undefined
-        }
+          props.openResults.length !== 0 ?
+            (
+              props.openResults.map(
+                (item, index) => {
+                  const boxData = props.boxDatas.get(item.boxId)
+                  let chartData = undefined
+                  if (boxData) {
+                    chartData = getChartDataOfBox(boxData)
+                  }
+                  const itemData: Item | undefined = boxData?.items.find(itemInBox => itemInBox.id === item.itemId)
 
-        {/* 데이터 없을 때 처리 */}
-        {props.openResults.length !== 0 ?
-          (
-            props.openResults.map(
-              (item, index) => {
-                const boxData = props.boxDatas.get(item.boxId)
-                let chartData = undefined
-                if (boxData) {
-                  chartData = getChartDataOfBox(boxData)
-                }
-                const itemData: Item | undefined = boxData?.items.find(itemInBox => itemInBox.id === item.itemId)
-
-                return (
-                  <ArchiveItem
-                    key={item.id}
-                    openResult={item}
-                    colorSet={index % 2}
-                    chartData={chartData}
-                    boxData={boxData}
-                    resultItemData={itemData}
+                  return (
+                    <ArchiveItem
+                      key={item.id}
+                      openResult={item}
+                      colorSet={index % 2}
+                      chartData={chartData}
+                      boxData={boxData}
+                      resultItemData={itemData}
                     // my='10px'
-                  />
-                )
-              }
+                    />
+                  )
+                }
+              )
             )
-          )
-          : 
-          <Flex
-            h='sm'
-            alignItems='center'
-            justifyContent='center'
-            flexDir='column'
-          >
-            <Image
-              src={monster_logo}
-              width='100px'
-            />
-
-            <Text
-              color='black'
-              mt='13px'
+            :
+            <Flex
+              h='sm'
+              alignItems='center'
+              justifyContent='center'
+              flexDir='column'
             >
-              오픈데이터가 없습니다.
-            </Text>
-          </Flex>
+              <Image
+                src={monster_logo}
+                width='100px'
+              />
+
+              <Text
+                color='black'
+                mt='13px'
+              >
+                오픈데이터가 없습니다.
+              </Text>
+            </Flex>
         }
       </VStack>
       
