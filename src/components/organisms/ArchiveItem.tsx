@@ -55,7 +55,7 @@ const ArchiveItem = ({
       >
         <Flex>
           <Link 
-            href={"https://scope.klaytn.com/tx/" + openResult.tx_hash}
+            href={"https://baobab.scope.klaytn.com/" + openResult.tx_hash}
             isExternal
             fontSize='11'
             color='gray.900'
